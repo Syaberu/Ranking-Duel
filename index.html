@@ -14,7 +14,6 @@
             --gold: #ffcc00;
             --silver: #e0e0e0;
             --bronze: #cd7f32;
-            --ht-grad: linear-gradient(135deg, #ff004c, #ff4b2b);
             --lt-grad: linear-gradient(135deg, #00f2fe, #4facfe);
         }
 
@@ -164,7 +163,7 @@
         .player-name { font-size: 1.3rem; font-weight: 800; color: #fff; }
         .player-record { font-size: 0.8rem; color: #00ff66; font-weight: 700; margin-top: 2px; letter-spacing: 0.5px; }
 
-        /* COMPATIBILITY STAMPS (キット別勝点) */
+        /* COMPATIBILITY STAMPS */
         .stamps-box {
             display: flex;
             gap: 12px;
@@ -223,7 +222,7 @@
             <h1 id="viewTitle">Overall Rankings</h1>
         </div>
         <div class="ranking-list" id="rankTable">
-            <!-- JavaScriptで動的ロード -->
+            <!-- Dynamic Load via JS -->
         </div>
     </div>
 
@@ -232,7 +231,6 @@
 
     <script src="data.js"></script>
     <script>
-        // data.jsがない場合のデフォルト
         const playersData = window.players || [];
 
         let currentCat = 'Overall';
@@ -279,34 +277,33 @@
             renderTable();
         }
 
-        // 2人の特定キットにおける勝敗判定 (2:勝ち, 1:引き分け, 0:負け)
-        function getMatchPoints(p1, p2, kit) {
-            const p1HasP2 = p1.beatenByKit?.[kit]?.includes(p2.name);
-            const p2HasP1 = p2.beatenByKit?.[kit]?.includes(p1.name);
-
-            if (p1HasP2 && !p2HasP1) return 2; // p1の勝ち
-            if (p2HasP1 && !p1HasP2) return 0; // p1の負け
-            return 1; // 引き分け (両方倒している、または両方倒していない)
+        // 2人の特定の試合スコアから「相性勝点」を5段階で計算する関数
+        // 4勝0敗: 4点 / 3勝1敗: 3点 / 2勝2敗: 2点 / 1勝3敗: 1点 / 0勝4敗: 0点
+        function getScorePoints(p1, p2, kit) {
+            if (p1.matchScores && p1.matchScores[p2.name] && p1.matchScores[p2.name][kit]) {
+                const score = p1.matchScores[p2.name][kit]; // [自分の勝ち数, 相手の勝ち数]
+                return score[0]; // 自分が勝った回数（0～4）がそのまま5段階の強さのポイントになる
+            }
+            return 2; // データが未登録の場合は 2-2（引き分け）扱い
         }
 
-        // 指定カテゴリにおけるプレイヤーの総合戦績（勝点・勝・分・敗）を計算
+        // 各種統計（トータル勝利ラウンド数・相性合計ポイント）を計算する関数
         function calculateRecord(player, cat) {
-            let wins = 0, draws = 0, losses = 0, totalPoints = 0;
+            let totalRoundsWon = 0; 
+            let totalPoints = 0;
             const kits = (cat === 'Overall') ? ['sword', 'axe', 'bow', 'uhc'] : [cat.toLowerCase()];
 
             playersData.forEach(other => {
                 if (other.name === player.name) return;
 
                 kits.forEach(k => {
-                    const pts = getMatchPoints(player, other, k);
+                    const pts = getScorePoints(player, other, k);
                     totalPoints += pts;
-                    if (pts === 2) wins++;
-                    else if (pts === 1) draws++;
-                    else if (pts === 0) losses++;
+                    totalRoundsWon += pts; // 1試合の中での勝利マップ数
                 });
             });
 
-            return { wins, draws, losses, points: totalPoints };
+            return { totalRoundsWon, points: totalPoints };
         }
 
         function renderTable() {
@@ -315,41 +312,41 @@
             
             let data = [...playersData];
 
-            // 相性レーティング・ソートアルゴリズム
+            // 5段階相性判定ソート
             data.sort((userX, userY) => {
                 const recX = calculateRecord(userX, currentCat);
                 const recY = calculateRecord(userY, currentCat);
 
-                // ① 総相性ポイント(Match Points)の比較
+                // ① 総相性ポイントの比較（4-0や3-1を重ねている方が圧倒的に上になる）
                 if (recX.points !== recY.points) return recY.points - recX.points;
 
-                // ② 直接対決のタイブレークポイント
+                // ② 直接対決のタイブレーク（同点だった場合、直接対決でより多く勝っている方を上にする）
                 let h2hX = 0, h2hY = 0;
                 const kits = (currentCat === 'Overall') ? ['sword', 'axe', 'bow', 'uhc'] : [currentCat.toLowerCase()];
                 kits.forEach(k => {
-                    h2hX += getMatchPoints(userX, userY, k);
-                    h2hY += getMatchPoints(userY, userX, k);
+                    h2hX += getScorePoints(userX, userY, k);
+                    h2hY += getScorePoints(userY, userX, k);
                 });
                 if (h2hX !== h2hY) return h2hY - h2hX;
 
-                // ③ 共通の対戦相手に対する相性の優劣比較 (ユーザー指定のCさんロジック)
+                // ③ 共通の対戦相手（Cさん）に対する相性の優劣判定
                 let betterCountX = 0, betterCountY = 0;
                 playersData.forEach(z => {
                     if (z.name === userX.name || z.name === userY.name) return;
                     kits.forEach(k => {
-                        const ptsXz = getMatchPoints(userX, z, k);
-                        const ptsYz = getMatchPoints(userY, z, k);
-                        if (ptsXz > ptsYz) betterCountX++; // Xの方がZに対して良い結果を出している
-                        if (ptsYz > ptsXz) betterCountY++; // Yの方がZに対して良い結果を出している
+                        const ptsXz = getScorePoints(userX, z, k);
+                        const ptsYz = getScorePoints(userY, z, k);
+                        if (ptsXz > ptsYz) betterCountX++; // Xの方がCさんに対してより大勝している、または善戦している
+                        if (ptsYz > ptsXz) betterCountY++; 
                     });
                 });
                 if (betterCountX !== betterCountY) return betterCountY - betterCountX;
 
-                // ④ 最終タイブレーク: 名前のアルファベット順
+                // ④ 最終的な引き分け時は名前順
                 return userX.name.localeCompare(userY.name);
             });
 
-            // レンダリング処理
+            // カードの描画
             data.forEach((p, i) => {
                 const rank = i + 1;
                 const isTop3 = rank <= 3;
@@ -360,7 +357,7 @@
                 const card = document.createElement('div');
                 card.className = `player-card ${isTop3 ? 'top-' + rank : ''}`;
                 
-                // 各Kit個別の勝点をミニスタンプに反映
+                // キット別ミニスタンプのポイント描画
                 let stamps = '';
                 ['sword', 'axe', 'bow', 'uhc'].forEach(k => {
                     const kRec = calculateRecord(p, k.toUpperCase());
@@ -384,12 +381,12 @@
                         <img src="skins/${p.name}.png" class="skin-img" onerror="this.src='https://minotar.net/helm/${p.name}/32'">
                         <div class="player-meta">
                             <span class="player-name">${p.name}</span>
-                            <span class="player-record">${rec.wins}勝 - ${rec.draws}分 - ${rec.losses}敗</span>
+                            <span class="player-record">Total Rounds Won: ${rec.totalRoundsWon}</span>
                         </div>
                     </div>
                     <div class="stamps-box">${stamps}</div>
                     <div class="score-box">
-                        <div class="score-label">${currentCat.toUpperCase()} MATCH POINTS</div>
+                        <div class="score-label">${currentCat.toUpperCase()} MATCH MATCH PTS</div>
                         <div class="score-value">${rec.points} PTS</div>
                     </div>
                 `;
