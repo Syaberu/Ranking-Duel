@@ -19,7 +19,7 @@ window.players = [
             biribirijin:  { sword: [4, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [2, 2], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            dracaena08:   { sword: [1, 3], axe: [0, 0], bow: [0, 0], uhc: [0, 0] } // 1-3 で敗北
+            dracaena08:   { sword: [1, 3], axe: [2, 2], bow: [0, 0], uhc: [0, 0] } // Axeで2-2を追加
         }
     },
     {
@@ -60,7 +60,7 @@ window.players = [
         mainKit: "Sword",
         matchScores: {
             AntiUnlockJP: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            MCsyaberu:    { sword: [3, 1], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }, // 3-1 で勝利
+            MCsyaberu:    { sword: [3, 1], axe: [2, 2], bow: [0, 0], uhc: [0, 0] }, // Axeで2-2を追加
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
