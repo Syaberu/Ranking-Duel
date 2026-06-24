@@ -18,8 +18,8 @@ window.players = [
             AntiUnlockJP: { sword: [1, 3], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             biribirijin:  { sword: [4, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Ahirusan4414: { sword: [2, 2], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            dracaena08:   { sword: [1, 3], axe: [2, 2], bow: [0, 0], uhc: [0, 0] } // Axeで2-2を追加
+            Ahirusan4414: { sword: [2, 2], axe: [4, 0], bow: [0, 0], uhc: [0, 0] }, // Axeで4-0を追加
+            dracaena08:   { sword: [1, 3], axe: [2, 2], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -49,7 +49,7 @@ window.players = [
         mainKit: "Sword",
         matchScores: {
             AntiUnlockJP: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            MCsyaberu:    { sword: [2, 2], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            MCsyaberu:    { sword: [2, 2], axe: [0, 4], bow: [0, 0], uhc: [0, 0] }, // Axeで0-4を追加
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
@@ -60,7 +60,7 @@ window.players = [
         mainKit: "Sword",
         matchScores: {
             AntiUnlockJP: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            MCsyaberu:    { sword: [3, 1], axe: [2, 2], bow: [0, 0], uhc: [0, 0] }, // Axeで2-2を追加
+            MCsyaberu:    { sword: [3, 1], axe: [2, 2], bow: [0, 0], uhc: [0, 0] },
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
