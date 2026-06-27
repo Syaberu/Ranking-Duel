@@ -4,26 +4,28 @@ window.players = [
         name: "AntiUnlockJP",
         mainKit: "Sword",
         matchScores: {
-            MCsyaberu:    { sword: [1, 3], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }, // 3-1 から 1-3 へ上書き
+            MCsyaberu:    { sword: [1, 3], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
         name: "MCsyaberu",
         mainKit: "Sword",
         matchScores: {
-            AntiUnlockJP: { sword: [3, 1], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }, // 1-3 から 3-1 へ上書き
+            AntiUnlockJP: { sword: [3, 1], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             biribirijin:  { sword: [4, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [2, 2], axe: [4, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [1, 3], axe: [2, 2], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [3, 1], axe: [3, 1], bow: [0, 0], uhc: [0, 0] } // Axeで3-1を追加
         }
     },
     {
@@ -36,7 +38,8 @@ window.players = [
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -49,7 +52,8 @@ window.players = [
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -62,7 +66,8 @@ window.players = [
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -75,7 +80,8 @@ window.players = [
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -88,7 +94,8 @@ window.players = [
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -101,7 +108,22 @@ window.players = [
             Reiteirei:    { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+        }
+    },
+    {
+        name: "chikuwa03224837",
+        mainKit: "Sword",
+        matchScores: {
+            AntiUnlockJP: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            MCsyaberu:    { sword: [1, 3], axe: [1, 3], bow: [0, 0], uhc: [0, 0] }, // Axeで1-3を追加
+            biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
     }
 ];
