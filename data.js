@@ -79,7 +79,7 @@ window.players = [
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Worldmotoki:  { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
+            Worldmotoki:  { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
             UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
@@ -93,9 +93,9 @@ window.players = [
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            dracaena08:   { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            chikuwa03224837: { sword: [0, 4], axe: [0, 4], bow: [0, 0], uhc: [0, 0] } // 各種キットで0-4を反映
+            dracaena08:   { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
+            UnsaidLand4664: { sword: [0, 4], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            chikuwa03224837: { sword: [0, 0], axe: [0, 4], bow: [0, 0], uhc: [0, 0] } // 戦績を上書き維持
         }
     },
     {
@@ -108,7 +108,7 @@ window.players = [
             Reiteirei:    { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
+            Worldmotoki:  { sword: [4, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             chikuwa03224837: { sword: [0, 4], axe: [0, 4], bow: [0, 0], uhc: [0, 0] }
         }
     },
@@ -122,7 +122,7 @@ window.players = [
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Worldmotoki:  { sword: [4, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] }, // 各種キットで4-0を反映
+            Worldmotoki:  { sword: [0, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] }, // 戦績を上書き維持
             UnsaidLand4664: { sword: [4, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] }
         }
     }
