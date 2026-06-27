@@ -25,7 +25,7 @@ window.players = [
             dracaena08:   { sword: [1, 3], axe: [2, 2], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             UnsaidLand4664: { sword: [0, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] },
-            chikuwa03224837: { sword: [3, 1], axe: [3, 1], bow: [0, 0], uhc: [0, 0] } // Axeで3-1を追加
+            chikuwa03224837: { sword: [3, 1], axe: [3, 1], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -79,7 +79,7 @@ window.players = [
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Worldmotoki:  { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
+            Worldmotoki:  { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
             UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
@@ -93,7 +93,7 @@ window.players = [
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            dracaena08:   { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
+            dracaena08:   { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
             UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
         }
@@ -109,7 +109,7 @@ window.players = [
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            chikuwa03224837: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            chikuwa03224837: { sword: [0, 0], axe: [0, 4], bow: [0, 0], uhc: [0, 0] } // Axeで0-4を追加
         }
     },
     {
@@ -117,13 +117,13 @@ window.players = [
         mainKit: "Sword",
         matchScores: {
             AntiUnlockJP: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            MCsyaberu:    { sword: [1, 3], axe: [1, 3], bow: [0, 0], uhc: [0, 0] }, // Axeで1-3を追加
+            MCsyaberu:    { sword: [1, 3], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Reiteirei:    { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] }
+            UnsaidLand4664: { sword: [0, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] } // Axeで4-0を追加
         }
     }
 ];
