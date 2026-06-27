@@ -52,8 +52,8 @@ window.players = [
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            UnsaidLand4664: { sword: [0, 0], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
-            chikuwa03224837: { sword: [0, 4], axe: [0, 4], bow: [0, 0], uhc: [0, 0] } // swordを 0 - 4 で追加
+            UnsaidLand4664: { sword: [0, 4], axe: [1, 3], bow: [0, 0], uhc: [0, 0] }, // swordを 0 - 4 で追加
+            chikuwa03224837: { sword: [0, 4], axe: [0, 4], bow: [0, 0], uhc: [0, 0] }
         }
     },
     {
@@ -105,7 +105,7 @@ window.players = [
             AntiUnlockJP: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             MCsyaberu:    { sword: [0, 0], axe: [0, 4], bow: [0, 0], uhc: [0, 0] },
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Reiteirei:    { sword: [0, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] },
+            Reiteirei:    { sword: [4, 0], axe: [3, 1], bow: [0, 0], uhc: [0, 0] }, // swordを 4 - 0 で追加
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [4, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
@@ -119,7 +119,7 @@ window.players = [
             AntiUnlockJP: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             MCsyaberu:    { sword: [1, 3], axe: [1, 3], bow: [0, 0], uhc: [0, 0] },
             biribirijin:  { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
-            Reiteirei:    { sword: [4, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] }, // swordを 4 - 0 で追加
+            Reiteirei:    { sword: [4, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] },
             Ahirusan4414: { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             dracaena08:   { sword: [0, 0], axe: [0, 0], bow: [0, 0], uhc: [0, 0] },
             Worldmotoki:  { sword: [0, 0], axe: [4, 0], bow: [0, 0], uhc: [0, 0] },
