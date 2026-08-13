@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MCPETiers Style - PvP Tier & Match History</title>
+  <title>SyabeTiers - デフォルトPvP Ranking</title>
   <style>
     :root {
       --bg-dark: #0a0c14;
@@ -32,7 +32,7 @@
 
     /* ヘッダー */
     header {
-      background: rgba(18, 22, 36, 0.8);
+      background: rgba(18, 22, 36, 0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
       position: sticky;
@@ -51,13 +51,19 @@
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 900;
       letter-spacing: 1px;
       background: linear-gradient(135deg, var(--accent-neon), var(--accent-purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
     }
 
     .container {
@@ -161,7 +167,7 @@
     .player-card.rank-3 { border-color: rgba(205, 127, 50, 0.6); }
     .player-card.rank-3 .rank-badge { color: #cd7f32; }
 
-    /* スキン表示エリアの設定 */
+    /* スキン表示エリア */
     .skin-avatar {
       width: 44px;
       height: 44px;
@@ -204,8 +210,8 @@
     .history-table th {
       background: rgba(0, 0, 0, 0.2);
       color: var(--text-muted);
-      font-size: 0.8rem;
-      text-transform: uppercase;
+      font-size: 0.85rem;
+      font-weight: 700;
       letter-spacing: 0.05em;
       border-bottom: 1px solid var(--border-color);
     }
@@ -273,15 +279,19 @@
 </head>
 <body>
 
+  <!-- ヘッダー -->
   <header>
     <div class="header-inner">
-      <div class="logo">MC TIERS</div>
+      <div class="logo">SyabeTiers</div>
+      <div class="subtitle">デフォルトPvP ランキング</div>
     </div>
   </header>
 
   <div class="container">
-    <div class="section-title">🏆 KITS RANKING</div>
+    <!-- ランキング セクション -->
+    <div class="section-title">🏆 キット別ランキング</div>
 
+    <!-- タブ切り替え -->
     <div class="tab-bar">
       <button class="tab-btn active" onclick="switchTab('Sword')">🗡️ Sword</button>
       <button class="tab-btn" onclick="switchTab('Axe')">🪓 Axe</button>
@@ -289,16 +299,18 @@
       <button class="tab-btn" onclick="switchTab('UHC')">🍎 UHC</button>
     </div>
 
+    <!-- プレイヤーカード一覧 -->
     <div class="ranking-grid" id="ranking-grid"></div>
 
-    <div class="section-title">📜 MATCH HISTORY</div>
+    <!-- 対戦履歴 セクション -->
+    <div class="section-title">📜 対戦履歴</div>
     <div class="history-card">
       <table class="history-table">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Kit</th>
-            <th>Match Outcome</th>
+            <th>日時</th>
+            <th>キット</th>
+            <th>対戦カード / スコア</th>
           </tr>
         </thead>
         <tbody id="history-body"></tbody>
@@ -306,23 +318,24 @@
     </div>
   </div>
 
+  <!-- 外部対戦データ -->
   <script src="data.js"></script>
 
   <script>
     let currentKit = "Sword";
 
-    // 1. skinsフォルダ内のローカル画像を取得するパス
+    // 1. skinsフォルダ内のローカル画像を取得
     function getSkinUrl(playerName) {
       return `skins/${playerName}.png`;
     }
 
-    // 2. ローカルに画像ファイルが存在しない場合のフォールバック処理
+    // 2. スキン画像が見つからない場合の予備アイコン
     function handleSkinError(img) {
       img.onerror = null;
-      // skins/{MCID}.png がない場合、デフォルトアイコンを設定
       img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="%238b5cf6"><rect width="24" height="24" fill="%231a2035"/><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
     }
 
+    // タブ切り替え
     function switchTab(kitName) {
       currentKit = kitName;
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -334,6 +347,7 @@
       renderRanking(kitName);
     }
 
+    // ランキングの描画
     function renderRanking(kitName) {
       const grid = document.getElementById('ranking-grid');
       const latestRanks = {};
@@ -364,6 +378,7 @@
       }).join('');
     }
 
+    // 対戦履歴の描画
     function renderHistory() {
       const tbody = document.getElementById('history-body');
       const reversedLogs = [...rawMatchLogs].reverse();
@@ -398,6 +413,7 @@
       }).join('');
     }
 
+    // 初期実行
     renderHistory();
     renderRanking(currentKit);
   </script>
