@@ -3,398 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCsyaberu's Bedrock Edition PVP Rankings - Leaderboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>PvP Ladder Ranking</title>
     <style>
         :root {
-            --bg: #050507;
-            --panel: #0d0d12;
-            --accent: #00d2ff;
-            --neon-glow: 0 0 15px rgba(0, 210, 255, 0.4);
-            --gold: #ffcc00;
-            --silver: #e0e0e0;
-            --bronze: #cd7f32;
-            --lt-grad: linear-gradient(135deg, #00f2fe, #4facfe);
+            --bg-color: #0a0c10;
+            --card-bg: #121620;
+            --card-border: #1e2638;
+            --neon-blue: #00f0ff;
+            --neon-purple: #7000ff;
+            --neon-gold: #ffd700;
+            --neon-silver: #c0c0c0;
+            --neon-bronze: #cd7f32;
+            --text-main: #f0f4f8;
+            --text-sub: #8a99ad;
+            --accent-red: #ff2a6d;
+            --accent-green: #05ffa1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg);
-            color: #fff;
-            font-family: 'Exo 2', sans-serif;
-            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 280px;
-            background: var(--panel);
-            border-right: 1px solid #222;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-        }
-
-        .logo-area {
-            padding: 40px 30px;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--accent);
-            text-shadow: var(--neon-glow);
-            letter-spacing: 2px;
+        header {
             text-align: center;
+            margin-bottom: 30px;
         }
 
-        .nav-btn {
+        h1 {
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        .container {
             width: 100%;
-            padding: 20px 30px;
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.3s;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
-        .nav-btn.active {
-            color: var(--accent);
-            background: rgba(0, 210, 255, 0.1);
-            border-left: 4px solid var(--accent);
-            text-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
-        }
-
-        /* --- SETTINGS --- */
-        .settings-area {
-            margin-top: auto;
-            padding: 30px;
-            border-top: 1px solid #222;
-        }
-        .settings-label { font-size: 0.75rem; color: #555; margin-bottom: 10px; display: block; }
-        input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
-        .mute-toggle {
-            background: none; border: 1px solid #333; color: #888;
-            width: 100%; padding: 8px; margin-top: 15px; border-radius: 5px; cursor: pointer;
-        }
-        .mute-toggle.active { color: var(--accent); border-color: var(--accent); }
-
-        /* --- MAIN CONTENT --- */
-        .main-container {
-            margin-left: 280px;
-            padding: 60px;
-            flex-grow: 1;
-        }
-
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        h1 { font-size: 2.5rem; font-weight: 900; margin: 0; text-transform: uppercase; }
-
-        /* --- RANKING CARDS --- */
-        .ranking-list { display: flex; flex-direction: column; gap: 15px; }
-
-        .player-card {
-            background: var(--panel);
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .player-card:hover {
-            transform: translateX(10px);
-            border-color: var(--accent);
-            box-shadow: var(--neon-glow);
-        }
-
-        .top-1 { border: 2px solid var(--gold); background: linear-gradient(90deg, #1a1600, #0d0d12); }
-        .top-2 { border: 1.5px solid var(--silver); }
-        .top-3 { border: 1.5px solid var(--bronze); }
-
-        .rank-number {
-            font-size: 2rem;
-            font-weight: 900;
-            width: 70px;
-            color: #333;
-        }
-        .top-1 .rank-number { color: var(--gold); }
-        .top-2 .rank-number { color: var(--silver); }
-        .top-3 .rank-number { color: var(--bronze); }
-
-        .crown-icon {
-            position: absolute;
-            top: -12px; left: 15px;
-            font-size: 1.5rem;
-            filter: drop-shadow(0 0 5px rgba(255,204,0,0.5));
-        }
-
-        .profile-box {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            min-width: 320px;
-        }
-
-        .skin-img {
-            width: 50px;
-            height: 50px;
-            background: #15151a;
-            border: 1px solid #333;
-            border-radius: 6px;
-            image-rendering: pixelated;
-            object-fit: contain;
-        }
-        .top-1 .skin-img { width: 60px; height: 60px; border-color: var(--gold); }
-
-        .player-meta { display: flex; flex-direction: column; }
-        .player-name { font-size: 1.3rem; font-weight: 800; color: #fff; }
-        .player-record { font-size: 0.8rem; color: #00ff66; font-weight: 700; margin-top: 2px; letter-spacing: 0.5px; }
-
-        /* COMPATIBILITY STAMPS */
-        .stamps-box {
-            display: flex;
-            gap: 12px;
-            margin-left: auto;
-            margin-right: 40px;
-        }
-        .tier-stamp {
-            width: 55px;
-            height: 55px;
-            border-radius: 8px;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
+            gap: 20px;
+        }
+
+        /* フォームエリア */
+        .admin-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-panel h2 {
+            font-size: 1.1rem;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        select, input {
+            background-color: #0a0c10;
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--neon-blue);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border: none;
+            color: #fff;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        /* ランキングラダー表示エリア */
+        .ladder-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ladder-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .ladder-item:hover {
+            transform: translateX(5px);
+            border-color: var(--neon-blue);
+        }
+
+        /* 1〜3位の特殊枠デザイン */
+        .ladder-item.rank-1 {
+            border-color: var(--neon-gold);
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), var(--card-bg));
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .ladder-item.rank-2 {
+            border-color: var(--neon-silver);
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.08), var(--card-bg));
+        }
+
+        .ladder-item.rank-3 {
+            border-color: var(--neon-bronze);
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.08), var(--card-bg));
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .rank-badge {
+            font-size: 1.2rem;
+            font-weight: 800;
+            width: 36px;
+            height: 36px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.65rem;
-            font-weight: 900;
-            transition: 0.3s;
+            border-radius: 50%;
+            background-color: #1a202c;
+            color: var(--text-sub);
         }
-        .STAMP-WIN { background: var(--lt-grad); box-shadow: 0 4px 10px rgba(0, 210, 255, 0.3); color: #fff; }
-        .STAMP-ZERO { background: #1a1a24; color: #555; border: 1px solid #222; }
 
-        .score-box {
-            text-align: right;
-            min-width: 160px;
+        .rank-1 .rank-badge { background-color: var(--neon-gold); color: #000; box-shadow: 0 0 10px var(--neon-gold); }
+        .rank-2 .rank-badge { background-color: var(--neon-silver); color: #000; }
+        .rank-3 .rank-badge { background-color: var(--neon-bronze); color: #000; }
+
+        .player-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
         }
-        .score-label { font-size: 0.7rem; color: #555; letter-spacing: 1px; }
-        .score-value { font-size: 1.6rem; font-weight: 900; color: var(--accent); }
 
-        @media (max-width: 1024px) {
-            .sidebar { width: 80px; }
-            .logo-area, .nav-btn span, .settings-area { display: none; }
-            .main-container { margin-left: 80px; padding: 30px; }
-            .stamps-box { display: none; }
+        .kit-tag {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background-color: #1e2638;
+            color: var(--neon-blue);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            font-weight: bold;
+        }
+
+        .challenge-tag {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        /* ログエリア */
+        .history-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        .history-panel h3 {
+            font-size: 1rem;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+        }
+
+        .history-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            padding: 6px 10px;
+            background-color: #0a0c10;
+            border-radius: 4px;
+            border-left: 3px solid var(--neon-purple);
+        }
+
+        .history-item .up {
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        .history-item .stay {
+            color: var(--text-sub);
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="logo-area">MCsyaberu's PVP</div>
-        <button class="nav-btn active" onclick="changeCategory('Overall')"><span>OVERALL</span></button>
-        <button class="nav-btn" onclick="changeCategory('Sword')"><span>SWORD</span></button>
-        <button class="nav-btn" onclick="changeCategory('Axe')"><span>AXE</span></button>
-        <button class="nav-btn" onclick="changeCategory('Bow')"><span>BOW</span></button>
-        <button class="nav-btn" onclick="changeCategory('UHC')"><span>UHC</span></button>
+    <header>
+        <h1>⚔️ PvP Ladder Ranking</h1>
+        <p class="subtitle">格上に挑み、1位の座を奪い取れ！</p>
+    </header>
 
-        <div class="settings-area">
-            <span class="settings-label">SYSTEM VOLUME</span>
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
-            <button class="mute-toggle" id="muteToggle" onclick="toggleMute()">Mute OFF</button>
+    <div class="container">
+        
+        <!-- 対戦データ入力フォーム -->
+        <div class="admin-panel">
+            <h2>⚔️ 戦績の追加（順位の移動）</h2>
+            <form id="matchForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>挑戦者（下位）</label>
+                        <select id="challengerSelect" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>対戦スコア</label>
+                        <input type="text" id="scoreInput" placeholder="4 - 0" value="4 - 0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>被挑戦者（格上）</label>
+                        <select id="defenderSelect" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>使用キット</label>
+                        <select id="kitSelect">
+                            <option value="Sword">Sword</option>
+                            <option value="Axe">Axe</option>
+                            <option value="Bow">Bow</option>
+                            <option value="UHC">UHC</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">結果を反映して順位を更新</button>
+            </form>
         </div>
+
+        <!-- ラダー（順位）一覧 -->
+        <div class="ladder-list" id="ladderContainer"></div>
+
+        <!-- 対戦履歴ログ -->
+        <div class="history-panel">
+            <h3>📜 最近の挑戦履歴</h3>
+            <ul class="history-list" id="historyContainer"></ul>
+        </div>
+
     </div>
 
-    <div class="main-container">
-        <div class="header-section">
-            <h1 id="viewTitle">Overall Rankings</h1>
-        </div>
-        <div class="ranking-list" id="rankTable">
-            <!-- Dynamic Load via JS -->
-        </div>
-    </div>
-
-    <audio id="snd-switch" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
-    <audio id="snd-top" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
-
-    <script src="data.js"></script>
+    <!-- 処理ロジック (JavaScript) -->
     <script>
-        const playersData = window.players || [];
+        // 初期状態のランキング（1位〜順に配列）
+        let ranking = [
+            { name: "chikuwa03224837", mainKit: "Sword" },
+            { name: "UnsaidLand4664",  mainKit: "Axe" },
+            { name: "MCsyaberu",       mainKit: "Sword" },
+            { name: "dracaena08",      mainKit: "Sword" },
+            { name: "Worldmotoki",     mainKit: "Axe" },
+            { name: "biribirijin",     mainKit: "Sword" },
+            { name: "Ahirusan4414",    mainKit: "Sword" },
+            { name: "Reiteirei",       mainKit: "Sword" },
+            { name: "AntiUnlockJP",    mainKit: "Sword" }
+        ];
 
-        let currentCat = 'Overall';
-        let isMuted = localStorage.getItem('pvp_muted') === 'true';
-        let vol = localStorage.getItem('pvp_vol') || 0.5;
+        // 履歴ログデータ
+        let historyLogs = [
+            "UnsaidLand4664 が Reiteirei に 4 - 0 (Sword) で勝利（順位変動なし）",
+            "Reiteirei が chikuwa03224837 に 0 - 4 (Sword) で敗北"
+        ];
 
-        const volInput = document.getElementById('volumeSlider');
-        const muteBtn = document.getElementById('muteToggle');
-        volInput.value = vol;
-        if(isMuted) muteBtn.classList.add('active'), muteBtn.innerText = "Mute ON";
+        // 画面描画関数
+        function render() {
+            const ladderContainer = document.getElementById("ladderContainer");
+            ladderContainer.innerHTML = "";
 
-        function playSound(id) {
-            if(isMuted) return;
-            const s = document.getElementById(id);
-            if (!s) return;
-            s.volume = vol;
-            s.currentTime = 0;
-            s.play().catch(() => {});
-        }
-
-        function toggleMute() {
-            isMuted = !isMuted;
-            localStorage.setItem('pvp_muted', isMuted);
-            muteBtn.classList.toggle('active');
-            muteBtn.innerText = isMuted ? "Mute ON" : "Mute OFF";
-        }
-
-        volInput.addEventListener('input', (e) => {
-            vol = e.target.value;
-            localStorage.setItem('pvp_vol', vol);
-        });
-
-        function changeCategory(cat) {
-            if(cat === currentCat) return;
-            currentCat = cat;
-            playSound('snd-switch');
-            
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                b.classList.remove('active');
-                if(b.innerText.trim() === cat.toUpperCase()) b.classList.add('active');
-            });
-            document.getElementById('viewTitle').innerText = `${cat} Rankings`;
-            
-            renderTable();
-        }
-
-        // 2人の特定の試合スコアから「相性勝点」を5段階で計算する関数
-        // 4勝0敗: 4点 / 3勝1敗: 3点 / 2勝2敗: 2点 / 1勝3敗: 1点 / 0勝4敗: 0点
-        function getScorePoints(p1, p2, kit) {
-            if (p1.matchScores && p1.matchScores[p2.name] && p1.matchScores[p2.name][kit]) {
-                const score = p1.matchScores[p2.name][kit]; // [自分の勝ち数, 相手の勝ち数]
-                return score[0]; // 自分が勝った回数（0～4）がそのまま5段階の強さのポイントになる
-            }
-            return 2; // データが未登録の場合は 2-2（引き分け）扱い
-        }
-
-        // 各種統計（トータル勝利ラウンド数・相性合計ポイント）を計算する関数
-        function calculateRecord(player, cat) {
-            let totalRoundsWon = 0; 
-            let totalPoints = 0;
-            const kits = (cat === 'Overall') ? ['sword', 'axe', 'bow', 'uhc'] : [cat.toLowerCase()];
-
-            playersData.forEach(other => {
-                if (other.name === player.name) return;
-
-                kits.forEach(k => {
-                    const pts = getScorePoints(player, other, k);
-                    totalPoints += pts;
-                    totalRoundsWon += pts; // 1試合の中での勝利マップ数
-                });
-            });
-
-            return { totalRoundsWon, points: totalPoints };
-        }
-
-        function renderTable() {
-            const list = document.getElementById('rankTable');
-            list.innerHTML = '';
-            
-            let data = [...playersData];
-
-            // 5段階相性判定ソート
-            data.sort((userX, userY) => {
-                const recX = calculateRecord(userX, currentCat);
-                const recY = calculateRecord(userY, currentCat);
-
-                // ① 総相性ポイントの比較（4-0や3-1を重ねている方が圧倒的に上になる）
-                if (recX.points !== recY.points) return recY.points - recX.points;
-
-                // ② 直接対決のタイブレーク（同点だった場合、直接対決でより多く勝っている方を上にする）
-                let h2hX = 0, h2hY = 0;
-                const kits = (currentCat === 'Overall') ? ['sword', 'axe', 'bow', 'uhc'] : [currentCat.toLowerCase()];
-                kits.forEach(k => {
-                    h2hX += getScorePoints(userX, userY, k);
-                    h2hY += getScorePoints(userY, userX, k);
-                });
-                if (h2hX !== h2hY) return h2hY - h2hX;
-
-                // ③ 共通の対戦相手（Cさん）に対する相性の優劣判定
-                let betterCountX = 0, betterCountY = 0;
-                playersData.forEach(z => {
-                    if (z.name === userX.name || z.name === userY.name) return;
-                    kits.forEach(k => {
-                        const ptsXz = getScorePoints(userX, z, k);
-                        const ptsYz = getScorePoints(userY, z, k);
-                        if (ptsXz > ptsYz) betterCountX++; // Xの方がCさんに対してより大勝している、または善戦している
-                        if (ptsYz > ptsXz) betterCountY++; 
-                    });
-                });
-                if (betterCountX !== betterCountY) return betterCountY - betterCountX;
-
-                // ④ 最終的な引き分け時は名前順
-                return userX.name.localeCompare(userY.name);
-            });
-
-            // カードの描画
-            data.forEach((p, i) => {
-                const rank = i + 1;
-                const isTop3 = rank <= 3;
-                const rec = calculateRecord(p, currentCat);
+            // ランキングカードの生成
+            ranking.forEach((player, index) => {
+                const rank = index + 1;
+                const card = document.createElement("div");
                 
-                if(isTop3) setTimeout(() => playSound('snd-top'), i * 150);
+                let rankClass = "";
+                let crown = "";
+                if (rank === 1) { rankClass = "rank-1"; crown = "👑 "; }
+                else if (rank === 2) rankClass = "rank-2";
+                else if (rank === 3) rankClass = "rank-3";
 
-                const card = document.createElement('div');
-                card.className = `player-card ${isTop3 ? 'top-' + rank : ''}`;
-                
-                // キット別ミニスタンプのポイント描画
-                let stamps = '';
-                ['sword', 'axe', 'bow', 'uhc'].forEach(k => {
-                    const kRec = calculateRecord(p, k.toUpperCase());
-                    const stampType = kRec.points > 0 ? 'STAMP-WIN' : 'STAMP-ZERO';
-                    
-                    const isActive = (currentCat === 'Overall' || currentCat.toLowerCase() === k);
-                    const activeStyle = isActive ? '' : 'opacity:0.15; transform:scale(0.9);';
-                    
-                    stamps += `
-                        <div class="tier-stamp ${stampType}" style="${activeStyle}">
-                            <span>${k.toUpperCase()}</span>
-                            <span style="font-size:0.9rem">${kRec.points}P</span>
-                        </div>
-                    `;
-                });
-
+                card.className = `ladder-item ${rankClass}`;
                 card.innerHTML = `
-                    ${rank === 1 ? '<div class="crown-icon">👑</div>' : ''}
-                    <div class="rank-number">#${rank}</div>
-                    <div class="profile-box">
-                        <img src="skins/${p.name}.png" class="skin-img" onerror="this.src='https://minotar.net/helm/${p.name}/32'">
-                        <div class="player-meta">
-                            <span class="player-name">${p.name}</span>
-                            <span class="player-record">Total Rounds Won: ${rec.totalRoundsWon}</span>
+                    <div class="player-info">
+                        <div class="rank-badge">${rank}</div>
+                        <div>
+                            <div class="player-name">${crown}${player.name}</div>
                         </div>
                     </div>
-                    <div class="stamps-box">${stamps}</div>
-                    <div class="score-box">
-                        <div class="score-label">${currentCat.toUpperCase()} MATCH MATCH PTS</div>
-                        <div class="score-value">${rec.points} PTS</div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="kit-tag">${player.mainKit}</span>
                     </div>
                 `;
-                list.appendChild(card);
+                ladderContainer.appendChild(card);
+            });
+
+            // セレクトボックスの選択肢を現在の順位で更新
+            const challengerSelect = document.getElementById("challengerSelect");
+            const defenderSelect = document.getElementById("defenderSelect");
+            
+            challengerSelect.innerHTML = "";
+            defenderSelect.innerHTML = "";
+
+            ranking.forEach(player => {
+                const opt1 = document.createElement("option");
+                opt1.value = player.name;
+                opt1.textContent = player.name;
+                challengerSelect.appendChild(opt1);
+
+                const opt2 = document.createElement("option");
+                opt2.value = player.name;
+                opt2.textContent = player.name;
+                defenderSelect.appendChild(opt2);
+            });
+
+            // デフォルトで「挑戦者」を2位、「被挑戦者」を1位にしておく
+            if (ranking.length >= 2) {
+                challengerSelect.selectedIndex = 1;
+                defenderSelect.selectedIndex = 0;
+            }
+
+            // 履歴の更新
+            const historyContainer = document.getElementById("historyContainer");
+            historyContainer.innerHTML = "";
+            historyLogs.slice().reverse().forEach(log => {
+                const li = document.createElement("li");
+                li.className = "history-item";
+                li.innerHTML = log;
+                historyContainer.appendChild(li);
             });
         }
 
-        window.addEventListener('DOMContentLoaded', renderTable);
+        // フォーム送信時の順位移動ロジック
+        document.getElementById("matchForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const challengerName = document.getElementById("challengerSelect").value;
+            const defenderName = document.getElementById("defenderSelect").value;
+            const scoreText = document.getElementById("scoreInput").value.trim();
+            const kit = document.getElementById("kitSelect").value;
+
+            if (challengerName === defenderName) {
+                alert("同じプレイヤー同士の対戦は選択できません。");
+                return;
+            }
+
+            // スコア解釈 (例: "4 - 0" -> 4 と 0)
+            const scores = scoreText.split("-").map(s => parseInt(s.trim(), 10));
+            if (scores.length !== 2 || isNaN(scores[0]) || isNaN(scores[1])) {
+                alert("スコアの形式が不正です。『4 - 0』のように入力してください。");
+                return;
+            }
+
+            const challengerScore = scores[0];
+            const defenderScore = scores[1];
+
+            // 現在のインデックス取得（数字が小さい方が格上・上位）
+            const challengerIndex = ranking.findIndex(p => p.name === challengerName);
+            const defenderIndex = ranking.findIndex(p => p.name === defenderName);
+
+            let logMsg = "";
+
+            // 挑戦者が格上（自分より上の順位）に勝ち、かつスコアで上回った場合
+            if (challengerIndex > defenderIndex && challengerScore > defenderScore) {
+                // 挑戦者を現在の位置から抜き取る
+                const [movedPlayer] = ranking.splice(challengerIndex, 1);
+                // 敗北した格上の位置へ挿入（格上とその下の全員が1つずつ下がる）
+                ranking.splice(defenderIndex, 0, movedPlayer);
+
+                logMsg = `<span class="up">【順位変動】</span> ${challengerName} が ${defenderName} に ${scoreText} (${kit}) で勝利し、<b>${defenderIndex + 1}位</b>に浮上！`;
+            } else {
+                // 変動なし（下位が負けた、または同順位以下への挑戦など）
+                logMsg = `<span class="stay">【順位維持】</span> ${challengerName} vs ${defenderName} (${scoreText} / ${kit}) - 順位変動なし`;
+            }
+
+            // 履歴に追加して再描画
+            historyLogs.push(logMsg);
+            render();
+        });
+
+        // 初期描画を実行
+        render();
     </script>
 </body>
 </html>
