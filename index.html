@@ -1,461 +1,165 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PvP Ladder Ranking</title>
-    <style>
-        :root {
-            --bg-color: #0a0c10;
-            --card-bg: #121620;
-            --card-border: #1e2638;
-            --neon-blue: #00f0ff;
-            --neon-purple: #7000ff;
-            --neon-gold: #ffd700;
-            --neon-silver: #c0c0c0;
-            --neon-bronze: #cd7f32;
-            --text-main: #f0f4f8;
-            --text-sub: #8a99ad;
-            --accent-red: #ff2a6d;
-            --accent-green: #05ffa1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PvP Tier & Match History</title>
+  <style>
+    :root {
+      --bg: #0d0f17;
+      --card-bg: #161b26;
+      --accent-neon: #00f0ff;
+      --accent-green: #00ff66;
+      --text: #e2e8f0;
+      --border: #2a3447;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      text-align: center;
+      color: var(--accent-neon);
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+    }
+    .section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      color: var(--accent-neon);
+      border-bottom: 2px solid var(--accent-neon);
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.85em;
+    }
+    .kit-Sword { background: #ff4757; color: #fff; }
+    .kit-Axe   { background: #ffa502; color: #fff; }
+    .kit-Bow   { background: #2ed573; color: #fff; }
+    .kit-UHC   { background: #1e90ff; color: #fff; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #fff;
-            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
-            margin-bottom: 8px;
-        }
-
-        p.subtitle {
-            color: var(--text-sub);
-            font-size: 0.95rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* フォームエリア */
-        .admin-panel {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .admin-panel h2 {
-            font-size: 1.1rem;
-            color: var(--neon-blue);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        label {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-        }
-
-        select, input {
-            background-color: #0a0c10;
-            border: 1px solid var(--card-border);
-            color: #fff;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        select:focus, input:focus {
-            border-color: var(--neon-blue);
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            border: none;
-            color: #fff;
-            padding: 12px;
-            font-weight: bold;
-            font-size: 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            transition: transform 0.1s, box-shadow 0.2s;
-        }
-
-        .btn-submit:hover {
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
-            transform: translateY(-1px);
-        }
-
-        .btn-submit:active {
-            transform: translateY(1px);
-        }
-
-        /* ランキングラダー表示エリア */
-        .ladder-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .ladder-item {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .ladder-item:hover {
-            transform: translateX(5px);
-            border-color: var(--neon-blue);
-        }
-
-        /* 1〜3位の特殊枠デザイン */
-        .ladder-item.rank-1 {
-            border-color: var(--neon-gold);
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), var(--card-bg));
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-        }
-
-        .ladder-item.rank-2 {
-            border-color: var(--neon-silver);
-            background: linear-gradient(90deg, rgba(192, 192, 192, 0.08), var(--card-bg));
-        }
-
-        .ladder-item.rank-3 {
-            border-color: var(--neon-bronze);
-            background: linear-gradient(90deg, rgba(205, 127, 50, 0.08), var(--card-bg));
-        }
-
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .rank-badge {
-            font-size: 1.2rem;
-            font-weight: 800;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: #1a202c;
-            color: var(--text-sub);
-        }
-
-        .rank-1 .rank-badge { background-color: var(--neon-gold); color: #000; box-shadow: 0 0 10px var(--neon-gold); }
-        .rank-2 .rank-badge { background-color: var(--neon-silver); color: #000; }
-        .rank-3 .rank-badge { background-color: var(--neon-bronze); color: #000; }
-
-        .player-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .kit-tag {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background-color: #1e2638;
-            color: var(--neon-blue);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            font-weight: bold;
-        }
-
-        .challenge-tag {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-        }
-
-        /* ログエリア */
-        .history-panel {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 10px;
-        }
-
-        .history-panel h3 {
-            font-size: 1rem;
-            color: var(--text-sub);
-            margin-bottom: 10px;
-        }
-
-        .history-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-
-        .history-item {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            padding: 6px 10px;
-            background-color: #0a0c10;
-            border-radius: 4px;
-            border-left: 3px solid var(--neon-purple);
-        }
-
-        .history-item .up {
-            color: var(--accent-green);
-            font-weight: bold;
-        }
-
-        .history-item .stay {
-            color: var(--text-sub);
-        }
-    </style>
+    .winner { color: var(--accent-green); font-weight: bold; }
+    .rank-tag { color: #888; font-size: 0.9em; margin-left: 4px; }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>⚔️ PvP Ladder Ranking</h1>
-        <p class="subtitle">格上に挑み、1位の座を奪い取れ！</p>
-    </header>
+<div class="container">
+  <h1>🎮 PvP Competitive Hub</h1>
 
-    <div class="container">
-        
-        <!-- 対戦データ入力フォーム -->
-        <div class="admin-panel">
-            <h2>⚔️ 戦績の追加（順位の移動）</h2>
-            <form id="matchForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>挑戦者（下位）</label>
-                        <select id="challengerSelect" required></select>
-                    </div>
-                    <div class="form-group">
-                        <label>対戦スコア</label>
-                        <input type="text" id="scoreInput" placeholder="4 - 0" value="4 - 0" required>
-                    </div>
-                    <div class="form-group">
-                        <label>被挑戦者（格上）</label>
-                        <select id="defenderSelect" required></select>
-                    </div>
-                    <div class="form-group">
-                        <label>使用キット</label>
-                        <select id="kitSelect">
-                            <option value="Sword">Sword</option>
-                            <option value="Axe">Axe</option>
-                            <option value="Bow">Bow</option>
-                            <option value="UHC">UHC</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="btn-submit">結果を反映して順位を更新</button>
-            </form>
-        </div>
+  <!-- ランキング表示エリア -->
+  <div class="section">
+    <h2>🏆 最新ランキング (Sword)</h2>
+    <table id="ranking-table">
+      <thead>
+        <tr>
+          <th>順位</th>
+          <th>プレイヤー</th>
+        </tr>
+      </thead>
+      <tbody id="ranking-body"></tbody>
+    </table>
+  </div>
 
-        <!-- ラダー（順位）一覧 -->
-        <div class="ladder-list" id="ladderContainer"></div>
+  <!-- 対戦履歴表示エリア -->
+  <div class="section">
+    <h2>📜 対戦履歴 (Match History)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>日時</th>
+          <th>キット</th>
+          <th>対戦カード / スコア</th>
+        </tr>
+      </thead>
+      <tbody id="history-body"></tbody>
+    </table>
+  </div>
+</div>
 
-        <!-- 対戦履歴ログ -->
-        <div class="history-panel">
-            <h3>📜 最近の挑戦履歴</h3>
-            <ul class="history-list" id="historyContainer"></ul>
-        </div>
+<!-- external script -->
+<script src="data.js"></script>
 
-    </div>
+<script>
+  // 1. 対戦履歴の描画（新しい順に表示）
+  function renderHistory() {
+    const tbody = document.getElementById('history-body');
+    // 新しい順にするため配列を反転
+    const reversedLogs = [...rawMatchLogs].reverse();
 
-    <!-- 処理ロジック (JavaScript) -->
-    <script>
-        // 初期状態のランキング（1位〜順に配列）
-        let ranking = [
-            { name: "chikuwa03224837", mainKit: "Sword" },
-            { name: "UnsaidLand4664",  mainKit: "Axe" },
-            { name: "MCsyaberu",       mainKit: "Sword" },
-            { name: "dracaena08",      mainKit: "Sword" },
-            { name: "Worldmotoki",     mainKit: "Axe" },
-            { name: "biribirijin",     mainKit: "Sword" },
-            { name: "Ahirusan4414",    mainKit: "Sword" },
-            { name: "Reiteirei",       mainKit: "Sword" },
-            { name: "AntiUnlockJP",    mainKit: "Sword" }
-        ];
+    tbody.innerHTML = reversedLogs.map(m => {
+      const isDraw = m.s1 === 0 && m.s2 === 0;
+      const p1Win = m.s1 > m.s2;
 
-        // 履歴ログデータ
-        let historyLogs = [
-            "UnsaidLand4664 が Reiteirei に 4 - 0 (Sword) で勝利（順位変動なし）",
-            "Reiteirei が chikuwa03224837 に 0 - 4 (Sword) で敗北"
-        ];
+      return `
+        <tr>
+          <td style="color:#888; font-size:0.9em;">${m.date}</td>
+          <td><span class="badge kit-${m.kit}">${m.kit}</span></td>
+          <td>
+            <span class="${p1Win ? 'winner' : ''}">${m.p1}</span>
+            <span class="rank-tag">(#${m.r1})</span>
+            <strong>${m.s1} - ${m.s2}</strong>
+            <span class="${!p1Win && !isDraw ? 'winner' : ''}">${m.p2}</span>
+            <span class="rank-tag">(#${m.r2})</span>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
 
-        // 画面描画関数
-        function render() {
-            const ladderContainer = document.getElementById("ladderContainer");
-            ladderContainer.innerHTML = "";
+  // 2. 最新ランキングの自動抽出と描画 (Swordキットの例)
+  function renderRanking(kitName = "Sword") {
+    const tbody = document.getElementById('ranking-body');
+    const latestRanks = {};
 
-            // ランキングカードの生成
-            ranking.forEach((player, index) => {
-                const rank = index + 1;
-                const card = document.createElement("div");
-                
-                let rankClass = "";
-                let crown = "";
-                if (rank === 1) { rankClass = "rank-1"; crown = "👑 "; }
-                else if (rank === 2) rankClass = "rank-2";
-                else if (rank === 3) rankClass = "rank-3";
+    // ログを順番に読み込み、各プレイヤーの最新順位を上書き保存
+    rawMatchLogs.forEach(m => {
+      if (m.kit === kitName) {
+        latestRanks[m.p1] = m.r1;
+        latestRanks[m.p2] = m.r2;
+      }
+    });
 
-                card.className = `ladder-item ${rankClass}`;
-                card.innerHTML = `
-                    <div class="player-info">
-                        <div class="rank-badge">${rank}</div>
-                        <div>
-                            <div class="player-name">${crown}${player.name}</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span class="kit-tag">${player.mainKit}</span>
-                    </div>
-                `;
-                ladderContainer.appendChild(card);
-            });
+    // 順位順にソート
+    const sorted = Object.entries(latestRanks).sort((a, b) => a[1] - b[1]);
 
-            // セレクトボックスの選択肢を現在の順位で更新
-            const challengerSelect = document.getElementById("challengerSelect");
-            const defenderSelect = document.getElementById("defenderSelect");
-            
-            challengerSelect.innerHTML = "";
-            defenderSelect.innerHTML = "";
+    tbody.innerHTML = sorted.map(([player, rank]) => `
+      <tr>
+        <td><strong>#${rank}</strong></td>
+        <td>${player}</td>
+      </tr>
+    `).join('');
+  }
 
-            ranking.forEach(player => {
-                const opt1 = document.createElement("option");
-                opt1.value = player.name;
-                opt1.textContent = player.name;
-                challengerSelect.appendChild(opt1);
+  // 初期化実行
+  renderHistory();
+  renderRanking("Sword");
+</script>
 
-                const opt2 = document.createElement("option");
-                opt2.value = player.name;
-                opt2.textContent = player.name;
-                defenderSelect.appendChild(opt2);
-            });
-
-            // デフォルトで「挑戦者」を2位、「被挑戦者」を1位にしておく
-            if (ranking.length >= 2) {
-                challengerSelect.selectedIndex = 1;
-                defenderSelect.selectedIndex = 0;
-            }
-
-            // 履歴の更新
-            const historyContainer = document.getElementById("historyContainer");
-            historyContainer.innerHTML = "";
-            historyLogs.slice().reverse().forEach(log => {
-                const li = document.createElement("li");
-                li.className = "history-item";
-                li.innerHTML = log;
-                historyContainer.appendChild(li);
-            });
-        }
-
-        // フォーム送信時の順位移動ロジック
-        document.getElementById("matchForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-
-            const challengerName = document.getElementById("challengerSelect").value;
-            const defenderName = document.getElementById("defenderSelect").value;
-            const scoreText = document.getElementById("scoreInput").value.trim();
-            const kit = document.getElementById("kitSelect").value;
-
-            if (challengerName === defenderName) {
-                alert("同じプレイヤー同士の対戦は選択できません。");
-                return;
-            }
-
-            // スコア解釈 (例: "4 - 0" -> 4 と 0)
-            const scores = scoreText.split("-").map(s => parseInt(s.trim(), 10));
-            if (scores.length !== 2 || isNaN(scores[0]) || isNaN(scores[1])) {
-                alert("スコアの形式が不正です。『4 - 0』のように入力してください。");
-                return;
-            }
-
-            const challengerScore = scores[0];
-            const defenderScore = scores[1];
-
-            // 現在のインデックス取得（数字が小さい方が格上・上位）
-            const challengerIndex = ranking.findIndex(p => p.name === challengerName);
-            const defenderIndex = ranking.findIndex(p => p.name === defenderName);
-
-            let logMsg = "";
-
-            // 挑戦者が格上（自分より上の順位）に勝ち、かつスコアで上回った場合
-            if (challengerIndex > defenderIndex && challengerScore > defenderScore) {
-                // 挑戦者を現在の位置から抜き取る
-                const [movedPlayer] = ranking.splice(challengerIndex, 1);
-                // 敗北した格上の位置へ挿入（格上とその下の全員が1つずつ下がる）
-                ranking.splice(defenderIndex, 0, movedPlayer);
-
-                logMsg = `<span class="up">【順位変動】</span> ${challengerName} が ${defenderName} に ${scoreText} (${kit}) で勝利し、<b>${defenderIndex + 1}位</b>に浮上！`;
-            } else {
-                // 変動なし（下位が負けた、または同順位以下への挑戦など）
-                logMsg = `<span class="stay">【順位維持】</span> ${challengerName} vs ${defenderName} (${scoreText} / ${kit}) - 順位変動なし`;
-            }
-
-            // 履歴に追加して再描画
-            historyLogs.push(logMsg);
-            render();
-        });
-
-        // 初期描画を実行
-        render();
-    </script>
 </body>
 </html>
