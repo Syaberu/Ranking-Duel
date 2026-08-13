@@ -12,11 +12,12 @@
       --accent-green: #00ff66;
       --text: #e2e8f0;
       --border: #2a3447;
+      --card-hover: #1e2536;
     }
     body {
       background-color: var(--bg);
       color: var(--text);
-      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 20px;
     }
@@ -28,6 +29,7 @@
       text-align: center;
       color: var(--accent-neon);
       text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+      margin-bottom: 15px;
     }
     .section {
       background: var(--card-bg);
@@ -37,20 +39,60 @@
       margin-bottom: 30px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
+
+    /* タブのスタイル */
+    .tab-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: #10141d;
+      color: #8892b0;
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.95em;
+      transition: all 0.2s ease;
+    }
+    .tab-btn:hover {
+      background: var(--card-hover);
+      color: #fff;
+    }
+    .tab-btn.active {
+      background: var(--accent-neon);
+      color: #0d0f17;
+      border-color: var(--accent-neon);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+
+    /* テーブルスタイル */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      margin-top: 5px;
     }
     th, td {
-      padding: 12px;
+      padding: 12px 15px;
       text-align: left;
       border-bottom: 1px solid var(--border);
     }
     th {
       color: var(--accent-neon);
       border-bottom: 2px solid var(--accent-neon);
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+    tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    /* バッジと勝者ハイライト */
     .badge {
       display: inline-block;
       padding: 3px 8px;
@@ -64,7 +106,8 @@
     .kit-UHC   { background: #1e90ff; color: #fff; }
 
     .winner { color: var(--accent-green); font-weight: bold; }
-    .rank-tag { color: #888; font-size: 0.9em; margin-left: 4px; }
+    .rank-tag { color: #888; font-size: 0.85em; margin-left: 4px; }
+    .empty-msg { text-align: center; color: #777; padding: 20px; }
   </style>
 </head>
 <body>
@@ -72,14 +115,24 @@
 <div class="container">
   <h1>🎮 PvP Competitive Hub</h1>
 
-  <!-- ランキング表示エリア -->
+  <!-- ランキング表示エリア（タブ切り替え付き） -->
   <div class="section">
-    <h2>🏆 最新ランキング (Sword)</h2>
+    <h2>🏆 Kit Rankings</h2>
+
+    <!-- タブボタン -->
+    <div class="tab-container">
+      <button class="tab-btn active" onclick="switchTab('Sword')">🗡️ Sword</button>
+      <button class="tab-btn" onclick="switchTab('Axe')">🪓 Axe</button>
+      <button class="tab-btn" onclick="switchTab('Bow')">🏹 Bow</button>
+      <button class="tab-btn" onclick="switchTab('UHC')">🍎 UHC</button>
+    </div>
+
+    <!-- ランキングテーブル -->
     <table id="ranking-table">
       <thead>
         <tr>
-          <th>順位</th>
-          <th>プレイヤー</th>
+          <th style="width: 20%;">順位</th>
+          <th style="width: 80%;">プレイヤー</th>
         </tr>
       </thead>
       <tbody id="ranking-body"></tbody>
@@ -88,13 +141,13 @@
 
   <!-- 対戦履歴表示エリア -->
   <div class="section">
-    <h2>📜 対戦履歴 (Match History)</h2>
+    <h2>📜 Match History</h2>
     <table>
       <thead>
         <tr>
-          <th>日時</th>
-          <th>キット</th>
-          <th>対戦カード / スコア</th>
+          <th style="width: 25%;">日時</th>
+          <th style="width: 15%;">キット</th>
+          <th style="width: 60%;">対戦カード / スコア</th>
         </tr>
       </thead>
       <tbody id="history-body"></tbody>
@@ -102,42 +155,34 @@
   </div>
 </div>
 
-<!-- external script -->
+<!-- 外部データの読み込み -->
 <script src="data.js"></script>
 
 <script>
-  // 1. 対戦履歴の描画（新しい順に表示）
-  function renderHistory() {
-    const tbody = document.getElementById('history-body');
-    // 新しい順にするため配列を反転
-    const reversedLogs = [...rawMatchLogs].reverse();
+  let currentKit = "Sword";
 
-    tbody.innerHTML = reversedLogs.map(m => {
-      const isDraw = m.s1 === 0 && m.s2 === 0;
-      const p1Win = m.s1 > m.s2;
+  // 1. タブ切り替え処理
+  function switchTab(kitName) {
+    currentKit = kitName;
 
-      return `
-        <tr>
-          <td style="color:#888; font-size:0.9em;">${m.date}</td>
-          <td><span class="badge kit-${m.kit}">${m.kit}</span></td>
-          <td>
-            <span class="${p1Win ? 'winner' : ''}">${m.p1}</span>
-            <span class="rank-tag">(#${m.r1})</span>
-            <strong>${m.s1} - ${m.s2}</strong>
-            <span class="${!p1Win && !isDraw ? 'winner' : ''}">${m.p2}</span>
-            <span class="rank-tag">(#${m.r2})</span>
-          </td>
-        </tr>
-      `;
-    }).join('');
+    // ボタンの見た目を更新
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.includes(kitName)) {
+        btn.classList.add('active');
+      }
+    });
+
+    // ランキングを再描画
+    renderRanking(kitName);
   }
 
-  // 2. 最新ランキングの自動抽出と描画 (Swordキットの例)
-  function renderRanking(kitName = "Sword") {
+  // 2. 指定されたキットの最新ランキングを描画
+  function renderRanking(kitName) {
     const tbody = document.getElementById('ranking-body');
     const latestRanks = {};
 
-    // ログを順番に読み込み、各プレイヤーの最新順位を上書き保存
+    // ログを時系列順に処理して各プレイヤーの最新順位を抽出
     rawMatchLogs.forEach(m => {
       if (m.kit === kitName) {
         latestRanks[m.p1] = m.r1;
@@ -145,8 +190,13 @@
       }
     });
 
-    // 順位順にソート
+    // 順位（昇順）でソート
     const sorted = Object.entries(latestRanks).sort((a, b) => a[1] - b[1]);
+
+    if (sorted.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="2" class="empty-msg">データがありません</td></tr>`;
+      return;
+    }
 
     tbody.innerHTML = sorted.map(([player, rank]) => `
       <tr>
@@ -156,9 +206,34 @@
     `).join('');
   }
 
+  // 3. 対戦履歴の描画（新しい順）
+  function renderHistory() {
+    const tbody = document.getElementById('history-body');
+    const reversedLogs = [...rawMatchLogs].reverse();
+
+    tbody.innerHTML = reversedLogs.map(m => {
+      const isDraw = m.s1 === 0 && m.s2 === 0;
+      const p1Win = m.s1 > m.s2;
+
+      return `
+        <tr>
+          <td style="color:#888; font-size:0.85em;">${m.date}</td>
+          <td><span class="badge kit-${m.kit}">${m.kit}</span></td>
+          <td>
+            <span class="${p1Win ? 'winner' : ''}">${m.p1}</span>
+            <span class="rank-tag">(#${m.r1})</span>
+            <strong style="margin: 0 6px;">${m.s1} - ${m.s2}</strong>
+            <span class="${!p1Win && !isDraw ? 'winner' : ''}">${m.p2}</span>
+            <span class="rank-tag">(#${m.r2})</span>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
   // 初期化実行
   renderHistory();
-  renderRanking("Sword");
+  renderRanking(currentKit);
 </script>
 
 </body>
