@@ -22,4 +22,6 @@ const rawMatchLogs = [
   { date: "2026/08/09 19:17", kit: "Sword", p1: "Shokai3197050", s1: 0, r1: 2, p2: "AntiUnlockJP", s2: 0, r2: 3 },
   { date: "2026/08/10 18:49", kit: "Sword", p1: "Reiteirei", s1: 3, r1: 7, p2: "VoteableArt9345", s2: 1, r2: 8 },
   { date: "2026/08/14 00:58", kit: "Mace",  p1: "MCsyaberu", s1: 3, r1: 1, p2: "Reiteirei", s2: 0, r2: 2 },
+  { date: "2026/08/14 15:26", kit: "Mace",  p1: "chikuwa03224837", s1: 3, r1: 2, p2: "Reiteirei", s2: 0, r2: 3 },
+  { date: "2026/08/14 16:01", kit: "Mace",  p1: "chikuwa03224837", s1: 3, r1: 1, p2: "MCsyaberu", s2: 2, r2: 2 }
 ];
